@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+bool belongsToCFG(char str[]) {
+    int len = strlen(str);
+    int i = 0;
+    if (str[i] == '0') {
+        i++;
+        if (str[i] == '1') {
+            i++;
+            if (i == len) {
+                return true; 
+            } else if (str[i] == '0') {
+                i++;
+                if (belongsToCFG(&str[i])) {
+                    return true; 
+                }
+            } else if (str[i] == '1') {
+                i++;
+                if (belongsToCFG(&str[i])) {
+                    return true;
+                }
+            }
+        }
+    
+    return false; 
+}
+int main() 
+{
+    char str[100];
+    printf("Enter a string: ");
+    scanf("%s", str);
+    bool result = belongsToCFG(str);
+    if (result) {
+        printf("The string belongs to the CFG language.\n");
+    } else {
+        printf("The string does not belong to the CFG language.\n");
+    }
+    return 0;
+}
+}
