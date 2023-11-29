@@ -1,0 +1,36 @@
+#include<stdio.h>
+#define STATES 3 
+#define ALPHABET_SIZE 2
+void simulateDFA(char input[]) {
+    int transitionTable[STATES][ALPHABET_SIZE] = {
+        {1, -1},
+        {1, 2}, 
+        {-1, -1} 
+    };
+    int currentState = 0; 
+    for (int i = 0; input[i] != '\0'; i++) {
+        int symbolIndex;
+        if (input[i] == 'a') {
+            symbolIndex = 0;
+        } else {
+            symbolIndex = 1;
+        }
+        currentState = transitionTable[currentState][symbolIndex];
+        if (currentState == -1) {
+            printf("String is not accepted by the DFA.\n");
+            return;
+        }
+    }
+    if (currentState == 2) {
+        printf("String is accepted by the DFA.\n");
+    } else {
+        printf("String is not accepted by the DFA.\n");
+    }
+}
+int main() {
+    char input[100];
+    printf("Enter a string: ");
+    scanf("%s", input);
+    simulateDFA(input);
+    return 0;
+}
