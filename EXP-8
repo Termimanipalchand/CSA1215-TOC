@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+#define MAX_STATES 10
+typedef struct {
+    int transitions[MAX_STATES][2]; 
+    int numStates;
+    int finalStates[MAX_STATES];
+    int numFinalStates; 
+} NFA;
+bool simulateNFA(NFA nfa, char str[]) {
+    int currentState = 0;
+    for (int i = 0; i < strlen(str); i++) {
+        currentState = nfa.transitions[currentState][str[i] - 'a'];   
+        if (currentState == -1) {
+            return false;
+        }
+    }
+    for (int i = 0; i < nfa.numFinalStates; i++) {
+        if (currentState == nfa.finalStates[i]) {
+            return true;
+        }
+    }
+    return false;
+}
+int main() {
+    NFA nfa;
+    nfa.transitions[0][0] = 1;
+    nfa.transitions[0][1] = -1;
+    nfa.transitions[1][0] = -1;
+    nfa.transitions[1][1] = 2;
+    nfa.numStates = 2;
+    nfa.finalStates[0] = 2;
+    nfa.numFinalStates = 1;
+    char str[100];
+    printf("Enter a string: ");
+    scanf("%s", str);
+    bool result = simulateNFA(nfa, str);
+    if (result) {
+        printf("The string belongs to the language.\n");
+    } else {
+        printf("The string does not belong to the language.\n");
+    } 
+    return 0;
+}
