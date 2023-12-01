@@ -1,58 +1,16 @@
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
-#define MAX_STATES 10
-typedef struct {
-    int transitions[MAX_STATES][2]; 
-    int numStates; 
-    int finalStates[MAX_STATES];
-    int numFinalStates; 
-} NFA;
-bool simulateNFA(NFA nfa, char str[]) {
-    int currentStates[MAX_STATES];
-    int nextState[MAX_STATES];
-    int numCurrentStates = 1; 
-    currentStates[0] = 0; // Initial state
-    for (int i = 0; i < strlen(str); i++) {
-        int numNextStates = 0;
-        for (int j = 0; j < numCurrentStates; j++) {
-            int state = currentStates[j];
-            int transition = nfa.transitions[state][str[i] - 'o']; 
-            if (transition != -1) {  nextState[numNextStates++] = transition;
-            }
-        }
-        if (numNextStates == 0) {
-            return false;
-        }
-        memcpy(currentStates, nextState, numNextStates * sizeof(int));
-        numCurrentStates = numNextStates;
-    }
-    for (int i = 0; i < numCurrentStates; i++) {
-        for (int j = 0; j < nfa.numFinalStates; j++) {
-            if (currentStates[i] == nfa.finalStates[j]) {
-                return true;
-            }
-        }
-    }
-    return false;
-}
+#include<stdio.h>
+#include<string.h>
+#define max 100
 int main() {
-    NFA nfa;
-    nfa.transitions[0][0] = 1;
-    nfa.transitions[0][1] = -1;
-    nfa.transitions[1][0] = 1;
-    nfa.transitions[1][1] = 2;
-    nfa.numStates = 3;
-    nfa.finalStates[0] = 2;
-    nfa.numFinalStates = 1;
-    char str[100];
-    printf("Enter a string: ");
+    char str[max];
+    int len;
+    printf("Enter the string to be checked: ");
     scanf("%s", str);
-    bool result = simulateNFA(nfa, str);  
-    if (result) {
-        printf("The string belongs to the language.\n");
+    len = strlen(str);
+    if (len >= 2 && str[0] == '0' && str[len - 1] == '1') {
+        printf("String is accepted\n");
     } else {
-        printf("The string does not belong to the language.\n");
+        printf("String is not accepted\n");
     }
     return 0;
 }
