@@ -1,41 +1,27 @@
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
-bool belongsToCFG(char str[]) {
-    int len = strlen(str);
-    int i = 0;
-    if (str[i] == '0') {
-        i++;
-        if (str[i] == '1') {
-            i++;
-            if (i == len) {
-                return true; 
-            } else if (str[i] == '0') {
-                i++;
-                if (belongsToCFG(&str[i])) {
-                    return true; 
-                }
-            } else if (str[i] == '1') {
-                i++;
-                if (belongsToCFG(&str[i])) {
-                    return true;
-                }
-            }
-        }
-    
-    return false; 
-}
-int main() 
+#include<stdio.h>
+#include<string.h>
+int main(){
+char s[100];
+int i,flag;
+int l;
+printf("enter a string to check:");
+scanf("%s",s);
+l=strlen(s);
+flag=1;
+for(i=0;i<l;i++)
 {
-    char str[100];
-    printf("Enter a string: ");
-    scanf("%s", str);
-    bool result = belongsToCFG(str);
-    if (result) {
-        printf("The string belongs to the CFG language.\n");
-    } else {
-        printf("The string does not belong to the CFG language.\n");
-    }
-    return 0;
+if(s[i]!='0' && s[i]!='1')
+{
+ flag=0;
+}
+}
+if(flag!=1)
+printf("string is Not Valid\n");
+if(flag==1)
+{
+if (s[0]=='0'&&s[l-1]=='1')
+printf("string is accepted\n");
+else
+printf("string is Not accepted\n");
 }
 }
